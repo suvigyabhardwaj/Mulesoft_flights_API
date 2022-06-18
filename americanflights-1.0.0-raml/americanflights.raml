@@ -1,0 +1,203 @@
+#%RAML 1.0
+title: americanflights
+
+types:
+  american: !include exchange_modules/68ef9520-24e9-4cf2-b2f5-620025690913/training-american-flight-data-type/1.0.1/AmericanFlightDataType.raml
+  putamerican: !include Data Types/putDataType.raml
+  patchamerican: !include Data Types/patchDataType.raml
+
+/flights:
+  get:
+    # queryParameters:
+    #   destination:
+    #     required: false
+    #     enum:
+    #       - LAX
+    #       - SFO
+    #       - CLE
+    description: Fetch all flights details from databse
+    responses:
+      200:
+        body:
+          application/json:
+            type: american[] 
+            example: !include exchange_modules/68ef9520-24e9-4cf2-b2f5-620025690913/training-american-flights-example/1.0.1/AmericanFlightsExample.raml
+
+      400:
+        body:
+          application/json:
+            example:
+              message: Bad request
+      
+      404:
+        body:
+          application/json:
+            example:
+              message: Resourse not found
+
+      500:
+        body:
+          application/json:
+            example:
+              message: Network error
+
+      
+  post:
+    description: Add a new fligt in the collection
+    body:
+      application/json:
+        type: american
+        example: !include Examples/FlightWithNoID.raml
+
+        # example: !include eexchange_modules/cbae5f0a-9648-4691-b245-74a654cdd967/american-flight-example/1.0.0/american-flight-example.raml
+
+    responses:
+      201:
+        body:
+            application/json:
+              example:
+                message: Flight added successfully
+
+      400:
+        body:
+          application/json:
+            example:
+              message: Bad request
+      
+      404:
+        body:
+          application/json:
+            example:
+              message: Resourse not found
+
+      500:
+        body:
+          application/json:
+            example:
+              message: Network error
+          
+    
+
+/flights/{ID}:
+  get:
+    description: Fetch data of a single flight
+
+    responses:
+      200:
+        body:
+            application/json:
+              example:
+                message: Successfully fetched the flight details.
+
+      400:
+        body:
+          application/json:
+            example:
+              message: Bad request
+      
+      404:
+        body:
+          application/json:
+            example:
+              message: Resourse not found
+
+      500:
+        body:
+          application/json:
+            example:
+              message: Network error
+
+      
+  patch:
+    description: Partially modifies a flight
+    body:
+      application/json:
+        type: patchamerican
+        example: !include Examples/PatchFlightExample.raml
+    
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              message: Resource modified successfully
+
+      400:
+        body:
+          application/json:
+            example:
+              message: Bad Request    
+            
+      404:
+        body:
+          application/json:
+            example: 
+              message: Resource Not Found
+
+      500:
+        body:
+          application/json:
+            example: 
+              message: Server error
+          
+
+  put:
+    description: Replaces a resource completely or creates  new one.
+    body:
+      application/json:
+        type: putamerican
+        example: !include Examples/PutFlightExample.raml
+
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              message: Resource created/replaced successfully
+
+      400:
+        body:
+          application/json:
+            example:
+              message: Bad Request    
+            
+      404:
+        body:
+          application/json:
+            example: 
+              message: Resource Not Found
+
+      500:
+        body:
+          application/json:
+            example: 
+              message: Server error
+
+          
+
+  delete:
+    description: Deletes a flight with given ID
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              message: Flight successfully deleted
+
+      400:
+        body:
+          application/json:
+            example:
+              message: Bad Request    
+            
+      404:
+        body:
+          application/json:
+            example: 
+              message: Resource Not Found
+
+      500:
+        body:
+          application/json:
+            example: 
+              message: Server error
