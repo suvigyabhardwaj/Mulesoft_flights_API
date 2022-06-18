@@ -1,2 +1,2 @@
-# americanflights
-American Flights API using Mule4
+# Mulesoft_flights_API
+Flights API using Mule4
