@@ -1,0 +1,4 @@
+%dw 2.0
+
+type auto_b26a8541_58b0_4e22_8fea_70d692ee95dc_Output_Variables_emptySeats = Null
+
